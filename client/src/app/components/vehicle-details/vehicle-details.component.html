@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <mat-card>
+        <form class="example-form">
+          <div class="row">
+            <mat-form-field>
+              <input matInput name="vinInput" [(ngModel)] = "vehicleDetails.vehicleIdentificationNumber" placeholder="Vehicle Identification Number">
+            </mat-form-field>    
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <input matInput name="modelNameInput" [(ngModel)] = "vehicleDetails.modelName" placeholder="Vehicle Model Name">
+            </mat-form-field>    
+          </div>      
+          <div class="row">
+            <mat-form-field>
+              <input matInput name="licenseNumberInput" [(ngModel)] = "vehicleDetails.licenseNumber" placeholder="License Plater Number">
+            </mat-form-field>    
+          </div>      
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Brand</mat-label>
+              <mat-select name="brandInput" [(ngModel)] = "vehicleDetails.brandId">
+                <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Vehicle Equipment</mat-label>
+              <mat-select name="vehicleEquipmentInput" [(ngModel)] = "vehicleDetails.vehicleEquipmentIds" multiple>
+                <mat-option *ngFor="let equipment of vehicleEquiments" [value]="equipment.id">{{equipment.description}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+    </mat-card>
+  </div>
