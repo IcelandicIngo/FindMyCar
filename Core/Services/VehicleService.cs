@@ -35,7 +35,30 @@ public class VehicleService : IVehicleService
 
     public async Task<VehicleDTO> CreateAsync(VehicleDTO vehicle)
     {
-        throw new NotImplementedException();
+        var brand = this.context.Brands.SingleOrDefault(x => x.Id == vehicle.BrandId);
+        if(brand == null)
+        {
+            throw new NotFoundException($"No brand with id '{vehicle.BrandId}' could be found");
+        }
+        var equipments = context.VehicleEquipments.Where(x => vehicle.EquipmentIds.Contains(x.Id)).ToList();
+        if(equipments.Count() != vehicle.EquipmentIds.Count())
+        {
+            var ids = equipments.Select(x => x.Id);
+            var invalidIds = vehicle.EquipmentIds.Where(x => !ids.Contains(x)).ToList();
+            var idMsg = string.Join(',', invalidIds);
+            throw new NotFoundException($"No vehicle equipments with ids '{idMsg}' could be found");
+        }
+        var dbObj = new Vehicle
+        {
+            VehicleId = vehicle.VehicleId,
+            LicenseNumber = vehicle.LicenseNumber,
+            ModelName = vehicle.ModelName,            
+            Brand = brand,
+            VehicleEquipments = equipments,
+        };
+        this.context.Vehicles.Add(dbObj);
+        await this.context.SaveChangesAsync();
+        return dbObj.ToDTO();
     }
 
     public async Task<VehicleDTO> UpdateAsync(int id, VehicleDTO vehicle)

@@ -2,6 +2,8 @@ namespace FindMyCar.Test.Extensions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net.Mime;
+using System.Text;
 using System.Text.Json;
 using FindMyCar.Core.Data;
 using FindMyCar.Core.DTO;
@@ -14,7 +16,11 @@ public static class HttpExtensions
     /// <param name="vehicle">Vehicle to create.</param>
     public static async Task<HttpResponseMessage> CreateAsync(this HttpClient client, VehicleDTO vehicle)
     {
-        return await client.PostAsync("/vehicle", JsonContent.Create(vehicle));
+        var msg = JsonContent.Create(vehicle);
+        return await client.PostAsync("/vehicle/", new StringContent(
+                JsonSerializer.Serialize(vehicle), 
+                Encoding.UTF8,
+                MediaTypeNames.Application.Json));
     }
 
     /// <summary>

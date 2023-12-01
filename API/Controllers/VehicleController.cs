@@ -47,12 +47,12 @@ public class VehicleController : ControllerBase
     /// </summary>
     /// <param name="vehicle">Vehicle to create.</param>
     [HttpPost(Name = "Create")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Vehicle))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(VehicleDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Create([FromBody] VehicleDTO vehicle)
     {
         var v = await this.service.CreateAsync(vehicle);
-        return CreatedAtAction("GetSingle", new { id = v.Id}, v);
+        return CreatedAtRoute("GetSingle", new { id = v.Id}, v);
     }
 
     /// <summary>

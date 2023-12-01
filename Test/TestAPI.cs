@@ -7,6 +7,7 @@ using FindMyCar.Test.Extensions;
 using FindMyCar.Core.Services;
 using FindMyCar.Test.Seed;
 using FindMyCar.Core.Extensions;
+using FindMyCar.Core.DTO;
 
 public class TestAPI
 {
@@ -27,6 +28,53 @@ public class TestAPI
         response.Assert404NotFound();
     }
 
+    [Fact]
+    public async Task CreateShouldReturn201()
+    {
+        var dto = new VehicleDTO
+        {
+            VehicleId = "123",
+            LicenseNumber = "123",
+            ModelName = "v75",
+            BrandId = 1,
+            EquipmentIds = new List<int>(){1}
+        };
+        var client = this.getClient();
+        var response = await client.CreateAsync(dto);
+        response.Assert201Created();
+    }
+
+    [Fact]
+    public async Task CreateWithInvalidBrandShouldReturn404()
+    {
+        var dto = new VehicleDTO
+        {
+            VehicleId = "123",
+            LicenseNumber = "123",
+            ModelName = "v75",
+            BrandId = -1,
+            EquipmentIds = new List<int>(){1}
+        };
+        var client = this.getClient();
+        var response = await client.CreateAsync(dto);
+        response.Assert404NotFound();
+    }
+
+    [Fact]
+    public async Task CreateWithEquipmentShouldReturn404()
+    {
+        var dto = new VehicleDTO
+        {
+            VehicleId = "123",
+            LicenseNumber = "123",
+            ModelName = "v75",
+            BrandId = 1,
+            EquipmentIds = new List<int>(){-1}
+        };
+        var client = this.getClient();
+        var response = await client.CreateAsync(dto);
+        response.Assert404NotFound();        
+    }
     
     #region Private Helpers
     private HttpClient getClient()
