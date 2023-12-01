@@ -8,8 +8,11 @@ public class TestSeeder
     {
         using (var context =  serviceProvider.GetRequiredService<VehicleContext>())
         {
-            context.Vehicles.AddRange(TestSeed.Vehicles);
-            context.SaveChanges();
+            if(!context.Vehicles.Any())
+            {
+                context.Vehicles.AddRange(TestSeed.Vehicles);
+                context.SaveChanges();
+            }
         }        
 
     }

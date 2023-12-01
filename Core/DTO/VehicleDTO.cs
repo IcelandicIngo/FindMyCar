@@ -2,6 +2,10 @@ namespace FindMyCar.Core.DTO;
 public class VehicleDTO
 {
     /// <summary>
+    /// Data model Id.
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
     /// VIN or Vehicle Identification Number that uniquely represents a Vehicle.
     /// </summary>
     public string VehicleId { get; set; } = string.Empty;

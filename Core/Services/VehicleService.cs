@@ -5,6 +5,8 @@ using FindMyCar.Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Diagnostics;
+using FindMyCar.Core.Extensions;
+
 public class VehicleService : IVehicleService
 {
     #region Private Members
@@ -16,27 +18,27 @@ public class VehicleService : IVehicleService
     }
 
     #region IVehicleService
-    public async Task<PagedResult<Vehicle>> GetAsync(int page = 1, int pageSize = 100)
+    public async Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Vehicle> GetAsync(int id)
+    public async Task<VehicleDTO> GetAsync(int id)
     {
         var vehicle = this.context.Vehicles.Include(x => x.Brand).Include(x => x.VehicleEquipments).SingleOrDefault(x => x.Id == id);
         if(vehicle == null)
         {
             throw new NotFoundException($"No vehicle with id '{id} could be found.");
         }
-        return vehicle;
+        return vehicle.ToDTO();
     }
 
-    public async Task<Vehicle> CreateAsync(VehicleDTO vehicle)
+    public async Task<VehicleDTO> CreateAsync(VehicleDTO vehicle)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Vehicle> UpdateAsync(int id, VehicleDTO vehicle)
+    public async Task<VehicleDTO> UpdateAsync(int id, VehicleDTO vehicle)
     {
         throw new NotImplementedException();
     }

@@ -11,23 +11,23 @@ public interface IVehicleService
     /// </summary>
     /// <param name="page">Page to return.</param>
     /// <param name="pageSize">Maximum number of results in page.</param>
-    Task<PagedResult<Vehicle>> GetAsync(int page = 1, int pageSize = 100);
+    Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100);
     /// <summary>
     /// Returns a specific vehicle based on id.
     /// </summary>
     /// <param name="id">Vehicle id.</param>
-    Task<Vehicle> GetAsync(int id);
+    Task<VehicleDTO> GetAsync(int id);
     /// <summary>
     /// Creates a vehicle.
     /// </summary>
     /// <param name="vehicle">Vehicle to create.</param>
-    Task<Vehicle> CreateAsync(VehicleDTO vehicle);
+    Task<VehicleDTO> CreateAsync(VehicleDTO vehicle);
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id">Vehicle id.</param>
     /// <param name="vehicle">Vehicle to update.</param>
-    Task<Vehicle> UpdateAsync(int id, VehicleDTO vehicle);
+    Task<VehicleDTO> UpdateAsync(int id, VehicleDTO vehicle);
     /// <summary>
     /// Deletes a vehicle represented by an id.
     /// </summary>

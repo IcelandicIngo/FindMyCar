@@ -6,6 +6,7 @@ using FindMyCar.Core.Data;
 using FindMyCar.Test.Extensions;
 using FindMyCar.Core.Services;
 using FindMyCar.Test.Seed;
+using FindMyCar.Core.Extensions;
 
 public class TestAPI
 {
@@ -15,13 +16,15 @@ public class TestAPI
         var client = this.getClient();
         var response = await client.GetAsync(1);
         response.Assert200OK();
-        await response.AssertAsync(TestSeed.Vehicles[0]);
+        await response.AssertAsync(TestSeed.Vehicles[0].ToDTO());
     }
 
     [Fact]
     public async Task GetInvalidSingleShouldReturn404()
     {
-
+        var client = this.getClient();
+        var response = await client.GetAsync(-1);
+        response.Assert404NotFound();
     }
 
     

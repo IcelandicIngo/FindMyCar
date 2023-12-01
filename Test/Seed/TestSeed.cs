@@ -1,7 +1,11 @@
 namespace FindMyCar.Test.Seed;
 using FindMyCar.Core.Data;
+using FindMyCar.Core.DTO;
+using FindMyCar.Core.Extensions;
+
 public static class TestSeed
 {
+
     public static List<Vehicle> Vehicles = new List<Vehicle>()
     {
         new Vehicle
