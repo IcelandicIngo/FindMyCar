@@ -11,6 +11,9 @@
     <ProjectReference Include="..\API\API.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>  
+  <ItemGroup>
     <PackageReference Include="DeepEqual" Version="4.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.0" />

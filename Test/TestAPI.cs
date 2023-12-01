@@ -3,14 +3,28 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using FindMyCar.Core.Data;
+using FindMyCar.Test.Extensions;
 using FindMyCar.Core.Services;
+using FindMyCar.Test.Seed;
+
 public class TestAPI
 {
     [Fact]
-    public void Test1()
+    public async Task GetSingleShouldReturn200()
+    {
+        var client = this.getClient();
+        var response = await client.GetAsync(1);
+        response.Assert200OK();
+        await response.AssertAsync(TestSeed.Vehicles[0]);
+    }
+
+    [Fact]
+    public async Task GetInvalidSingleShouldReturn404()
     {
 
     }
+
+    
     #region Private Helpers
     private HttpClient getClient()
     {
@@ -21,11 +35,19 @@ public class TestAPI
             {
                 services.AddDbContext<VehicleContext>(options =>
                 {
-                    options.UseInMemoryDatabase("MyDatabase-" + Guid.NewGuid());
+                    options.UseInMemoryDatabase("MyDatabase");
                 });
                 services.AddTransient<IVehicleService, VehicleService>();
             });
         });
+
+        var seeder = new TestSeeder();
+        using (var scope = application.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            seeder.Seed(services);
+        }
         return application.CreateClient();
     }
     #endregion

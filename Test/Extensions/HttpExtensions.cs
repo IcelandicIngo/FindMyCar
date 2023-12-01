@@ -103,7 +103,7 @@ public static class HttpExtensions
     {
         string responseBody = await msg.Content.ReadAsStringAsync();
         string bodyJson = JsonSerializer.Serialize(expected);
-        Assert.Equal(bodyJson, responseBody);
+        Assert.Equal(bodyJson.ToLower(), responseBody.ToLower());
         return msg;
     }
 

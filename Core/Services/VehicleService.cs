@@ -1,6 +1,10 @@
 namespace FindMyCar.Core.Services;
 using FindMyCar.Core.Data;
 using FindMyCar.Core.DTO;
+using FindMyCar.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Diagnostics;
 public class VehicleService : IVehicleService
 {
     #region Private Members
@@ -19,7 +23,12 @@ public class VehicleService : IVehicleService
 
     public async Task<Vehicle> GetAsync(int id)
     {
-        throw new NotImplementedException();
+        var vehicle = this.context.Vehicles.Include(x => x.Brand).Include(x => x.VehicleEquipments).SingleOrDefault(x => x.Id == id);
+        if(vehicle == null)
+        {
+            throw new NotFoundException($"No vehicle with id '{id} could be found.");
+        }
+        return vehicle;
     }
 
     public async Task<Vehicle> CreateAsync(VehicleDTO vehicle)

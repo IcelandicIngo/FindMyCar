@@ -60,7 +60,7 @@ public class VehicleController : ControllerBase
     /// </summary>
     /// <param name="id">Id of vehicle to update.</param>
     /// <param name="vehicle">Vehicle to update.</param>
-    [HttpGet("{id}", Name = "Update")]
+    [HttpPut("{id}", Name = "Update")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Vehicle))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Update(int id, VehicleDTO vehicle)
@@ -72,7 +72,7 @@ public class VehicleController : ControllerBase
     /// Deletes a single vehicle.
     /// </summary>
     /// <param name="id">Id of vehicle to delete.</param>
-    [HttpGet("{id}", Name = "Delete")]
+    [HttpDelete("{id}", Name = "Delete")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(int id)

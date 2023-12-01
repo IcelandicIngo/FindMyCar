@@ -8,4 +8,5 @@ public class Brand
     /// Data model id.
     /// </summary>
     public int Id { get; set; }
+    public string Name { get; set; }
 }

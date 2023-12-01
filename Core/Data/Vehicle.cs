@@ -27,5 +27,5 @@ public class Vehicle
     /// <summary>
     /// Vehicle equipment such as cameras, sensors etc.
     /// </summary>
-    public virtual VehicleEquipment VehicleEquipment { get; set; }
+    public virtual List<VehicleEquipment> VehicleEquipments { get; set; }
 }
