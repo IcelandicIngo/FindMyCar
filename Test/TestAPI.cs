@@ -61,7 +61,7 @@ public class TestAPI
     }
 
     [Fact]
-    public async Task CreateWithEquipmentShouldReturn404()
+    public async Task CreateWithInvalidEquipmentShouldReturn404()
     {
         var dto = new VehicleDTO
         {
@@ -75,7 +75,53 @@ public class TestAPI
         var response = await client.CreateAsync(dto);
         response.Assert404NotFound();        
     }
+
+    [Fact]
+    public async Task UpdateShouldReturn200()
+    {
+        var volvo = TestSeed.Vehicles[0].ToDTO();
+        volvo.LicenseNumber = "555";
+        
+        var client = this.getClient();
+        var response = await client.UpdateAsync(volvo.Id, volvo);
+        response.Assert200OK();
+        await response.AssertAsync(x => {
+            Assert.Equal(volvo.LicenseNumber, x.LicenseNumber);
+        });
+    }
+
+    [Fact]
+    public async Task UpdateWithInvalidVehicleShouldReturn404()
+    {
+        var dto = TestSeed.Vehicles[0].ToDTO();
+        
+        var client = this.getClient();
+        var response = await client.UpdateAsync(-1, dto);
+        response.Assert404NotFound();
+    }
+
+    [Fact]
+    public async Task UpdateWithInvalidBrandShouldReturn404()
+    {
+        var dto = TestSeed.Vehicles[0].ToDTO();
+        dto.BrandId = -1;
+
+        var client = this.getClient();
+        var response = await client.UpdateAsync(dto.Id, dto);
+        response.Assert404NotFound();        
+    }
     
+    [Fact]
+    public async Task UpdateWithInvalidEquipmentShouldReturn404()
+    {
+        var dto = TestSeed.Vehicles[0].ToDTO();
+        dto.EquipmentIds = new List<int>(){-1};
+
+        var client = this.getClient();
+        var response = await client.UpdateAsync(dto.Id, dto);
+        response.Assert404NotFound();    
+    }
+
     #region Private Helpers
     private HttpClient getClient()
     {

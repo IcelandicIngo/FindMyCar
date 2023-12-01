@@ -113,6 +113,22 @@ public static class HttpExtensions
         return msg;
     }
 
+    /// <summary>
+    /// Custom assert HttpResponseMessage using provided assert action.
+    /// </summary>
+    /// <param name="msg">HttpResponseMessage that should vehicle.</param>
+    /// <param name="assert">Custom assert action.</param>
+    /// <returns></returns>
+    public static async Task<HttpResponseMessage> AssertAsync(this HttpResponseMessage msg, Action<VehicleDTO> assert)
+    {
+        string responseBody = await msg.Content.ReadAsStringAsync();
+        var obj = JsonSerializer.Deserialize<VehicleDTO>(responseBody, new JsonSerializerOptions{
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+        assert(obj);
+        return msg;
+    }
+
     private static HttpResponseMessage AssertStatusCode(this HttpResponseMessage msg, HttpStatusCode code)
     {
         Assert.Equal(code, msg.StatusCode);

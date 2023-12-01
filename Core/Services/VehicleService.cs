@@ -25,7 +25,7 @@ public class VehicleService : IVehicleService
 
     public async Task<VehicleDTO> GetAsync(int id)
     {
-        var vehicle = this.context.Vehicles.Include(x => x.Brand).Include(x => x.VehicleEquipments).SingleOrDefault(x => x.Id == id);
+        var vehicle = await this.context.GetVehicleOrThrowAsync(id);
         if(vehicle == null)
         {
             throw new NotFoundException($"No vehicle with id '{id} could be found.");
@@ -35,40 +35,38 @@ public class VehicleService : IVehicleService
 
     public async Task<VehicleDTO> CreateAsync(VehicleDTO vehicle)
     {
-        var brand = this.context.Brands.SingleOrDefault(x => x.Id == vehicle.BrandId);
-        if(brand == null)
-        {
-            throw new NotFoundException($"No brand with id '{vehicle.BrandId}' could be found");
-        }
-        var equipments = context.VehicleEquipments.Where(x => vehicle.EquipmentIds.Contains(x.Id)).ToList();
-        if(equipments.Count() != vehicle.EquipmentIds.Count())
-        {
-            var ids = equipments.Select(x => x.Id);
-            var invalidIds = vehicle.EquipmentIds.Where(x => !ids.Contains(x)).ToList();
-            var idMsg = string.Join(',', invalidIds);
-            throw new NotFoundException($"No vehicle equipments with ids '{idMsg}' could be found");
-        }
+        var brand = await this.context.GetBrandOrThrowAsync(vehicle.BrandId);
+        var equipments = await context.GetEquipmentOrThrowAsync(vehicle.EquipmentIds);
         var dbObj = new Vehicle
         {
             VehicleId = vehicle.VehicleId,
             LicenseNumber = vehicle.LicenseNumber,
-            ModelName = vehicle.ModelName,            
+            ModelName = vehicle.ModelName,
             Brand = brand,
             VehicleEquipments = equipments,
         };
-        this.context.Vehicles.Add(dbObj);
+        await this.context.Vehicles.AddAsync(dbObj);
         await this.context.SaveChangesAsync();
         return dbObj.ToDTO();
     }
 
     public async Task<VehicleDTO> UpdateAsync(int id, VehicleDTO vehicle)
     {
-        throw new NotImplementedException();
+        var dbVehicle = await this.context.GetVehicleOrThrowAsync(id);
+        var brand = await this.context.GetBrandOrThrowAsync(vehicle.BrandId);
+        var equipment = await this.context.GetEquipmentOrThrowAsync(vehicle.EquipmentIds);
+        dbVehicle.LicenseNumber = vehicle.LicenseNumber;
+        dbVehicle.VehicleId = vehicle.VehicleId;
+        dbVehicle.ModelName = vehicle.ModelName;
+        dbVehicle.Brand = brand;
+        dbVehicle.VehicleEquipments = equipment;
+        await this.context.SaveChangesAsync();
+        return dbVehicle.ToDTO();
     }
 
     public async Task DeleteAsync(int id)
     {
         throw new NotImplementedException();
     }
-    #endregion    
+    #endregion
 }
