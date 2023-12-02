@@ -22,14 +22,7 @@ public static class HostingExtensions
         builder.Services.AddDbContext<VehicleContext>(options => {
             options.UseSqlServer(builder.Configuration.GetConnectionString("FindMyCar"));
         });
-        builder.Host.UseSerilog((ctx,cfg)=>
-        {
-            //Override Few of the Configurations
-            cfg.Enrich.WithProperty("Application", ctx.HostingEnvironment.ApplicationName)
-                .Enrich.WithProperty("Environment", ctx.HostingEnvironment.EnvironmentName)
-                .WriteTo.Console(new RenderedCompactJsonFormatter())
-                .WriteTo.GrafanaLoki(ctx.Configuration["Loki"]);
-        });   
+        builder.ConfigureLogging();
         return builder;
     }
 
@@ -44,7 +37,7 @@ public static class HostingExtensions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        app.UseHttpsRedirection();     
+        app.UseHttpsRedirection();
         app.ConfigureMetrics();
         app.UseMiddleware<ExceptionMiddleware>();
         app.MapControllers();
@@ -67,7 +60,20 @@ public static class HostingExtensions
             return next();
         });
         app.UseMetricServer();
-        app.UseHttpMetrics();    
+        app.UseHttpMetrics();
         return app;
-    }    
+    }
+
+    /// <summary>
+    /// Configures logging for WebApplicationBuilder.
+    /// </summary>
+    /// <param name="builder">WebApplicationBuilder to configure metrics for.</param>
+    public static WebApplicationBuilder ConfigureLogging(this WebApplicationBuilder builder)
+    {
+        var logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .CreateLogger();
+        builder.Logging.AddSerilog(logger);
+        return builder;
+    }
 }
