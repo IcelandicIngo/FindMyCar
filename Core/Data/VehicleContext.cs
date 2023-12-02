@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 public class VehicleContext : DbContext
 {
-    public VehicleContext(DbContextOptions options) : base(options) {}
+    public VehicleContext(DbContextOptions<VehicleContext> options) : base(options) {}
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<Brand> Brands { get; set; }
     public DbSet<VehicleEquipment> VehicleEquipments { get; set; }    

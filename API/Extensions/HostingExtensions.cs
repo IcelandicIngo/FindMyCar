@@ -1,4 +1,6 @@
 using API.Middlewares;
+using FindMyCar.Core.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
 
@@ -13,6 +15,9 @@ public static class HostingExtensions
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddDbContext<VehicleContext>(options => {
+            options.UseSqlServer();
+        });
         return builder;
     }
 
