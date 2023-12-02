@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using FindMyCar.Core.Data;
 using FindMyCar.Core.Services;
 using FindMyCar.Test.Seed;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace FindMyCar.Test;
 public partial class TestAPI
@@ -14,6 +16,9 @@ public partial class TestAPI
         var application = new WebApplicationFactory<Program>()
         .WithWebHostBuilder(builder =>
         {
+            builder.ConfigureLogging(op => {
+                op.ClearProviders();
+            });
             builder.ConfigureServices(services =>
             {
                 var context = services.FirstOrDefault(descriptor => descriptor.ServiceType == typeof(VehicleContext));
