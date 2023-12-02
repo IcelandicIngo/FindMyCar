@@ -67,7 +67,7 @@ public static class HostingExtensions
     /// <summary>
     /// Configures logging for WebApplicationBuilder.
     /// </summary>
-    /// <param name="builder">WebApplicationBuilder to configure metrics for.</param>
+    /// <param name="builder">WebApplicationBuilder to configure logging for.</param>
     public static WebApplicationBuilder ConfigureLogging(this WebApplicationBuilder builder)
     {
         var logger = new LoggerConfiguration()
