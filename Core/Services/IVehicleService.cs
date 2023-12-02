@@ -1,5 +1,4 @@
 namespace FindMyCar.Core.Services;
-using FindMyCar.Core.Data;
 using FindMyCar.Core.DTO;
 /// <summary>
 /// IVehicleService is the contract for interacting with the vehicle resource.

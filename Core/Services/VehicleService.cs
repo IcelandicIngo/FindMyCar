@@ -66,7 +66,8 @@ public class VehicleService : IVehicleService
 
     public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var dbVehicle = await this.context.GetVehicleOrThrowAsync(id);
+        this.context.Vehicles.Remove(dbVehicle);
     }
     #endregion
 }

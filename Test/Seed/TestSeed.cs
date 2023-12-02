@@ -1,7 +1,5 @@
 namespace FindMyCar.Test.Seed;
 using FindMyCar.Core.Data;
-using FindMyCar.Core.DTO;
-using FindMyCar.Core.Extensions;
 
 public static class TestSeed
 {
@@ -41,6 +39,11 @@ public static class TestSeed
         {
             Id = 1,
             Name = "Volvo"
+        },
+        new Brand 
+        {
+            Id = 2,
+            Name = ""
         }
     };
 

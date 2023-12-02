@@ -6,9 +6,8 @@ using FindMyCar.Core.DTO;
 using FindMyCar.Core.Data;
 using FindMyCar.Core;
 
-[ApiController]
 [Route("[controller]")]
-public class VehicleController : ControllerBase
+public class VehicleController : Controller
 {
     #region Private Members
     private readonly IVehicleService service;
@@ -24,7 +23,7 @@ public class VehicleController : ControllerBase
     /// <param name="page">Page to return.</param>
     /// <param name="pageSize">Maximum number of results per page.</param>
     [HttpGet(Name = "GetPage")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<Vehicle>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<VehicleDTO>))]
     public async Task<ActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
     {
         return Ok(await this.service.GetAsync(page, pageSize));
@@ -35,7 +34,7 @@ public class VehicleController : ControllerBase
     /// </summary>
     /// <param name="id">Id of vehicle to return.</param>
     [HttpGet("{id}", Name = "GetSingle")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Vehicle))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VehicleDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Get(int id)
     {
@@ -61,7 +60,7 @@ public class VehicleController : ControllerBase
     /// <param name="id">Id of vehicle to update.</param>
     /// <param name="vehicle">Vehicle to update.</param>
     [HttpPut("{id}", Name = "Update")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Vehicle))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VehicleDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Update(int id, VehicleDTO vehicle)
     {
