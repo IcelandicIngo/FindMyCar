@@ -16,6 +16,17 @@ public partial class TestAPI
         {
             builder.ConfigureServices(services =>
             {
+                var context = services.FirstOrDefault(descriptor => descriptor.ServiceType == typeof(VehicleContext));
+                if (context != null)
+                {
+                    services.Remove(context);
+                    var options = services.Where(r => (r.ServiceType == typeof(DbContextOptions))
+                        || (r.ServiceType.IsGenericType && r.ServiceType.GetGenericTypeDefinition() == typeof(DbContextOptions<>))).ToArray();
+                    foreach (var option in options)
+                    {
+                        services.Remove(option);
+                    }
+                }
                 services.AddDbContext<VehicleContext>(options =>
                 {
                     options.UseInMemoryDatabase("MyDatabase");
