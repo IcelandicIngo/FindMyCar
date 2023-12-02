@@ -16,7 +16,7 @@ public static class HostingExtensions
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddDbContext<VehicleContext>(options => {
-            options.UseSqlServer();
+            options.UseSqlServer(builder.Configuration.GetConnectionString("FindMyCar"));
         });
         return builder;
     }

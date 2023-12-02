@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{BFFF63A9-10A0-470C-B7C0-0DC7EF966C2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrator", "Migrator\Migrator.csproj", "{A1EFA2D6-A3E2-42B1-9AEB-80A1C414BBCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{BFFF63A9-10A0-470C-B7C0-0DC7EF966C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFFF63A9-10A0-470C-B7C0-0DC7EF966C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFFF63A9-10A0-470C-B7C0-0DC7EF966C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1EFA2D6-A3E2-42B1-9AEB-80A1C414BBCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EFA2D6-A3E2-42B1-9AEB-80A1C414BBCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EFA2D6-A3E2-42B1-9AEB-80A1C414BBCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1EFA2D6-A3E2-42B1-9AEB-80A1C414BBCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
