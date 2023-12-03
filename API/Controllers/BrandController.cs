@@ -20,7 +20,7 @@ public class BrandController : Controller
     /// Returns all brands available.
     /// </summary>
     /// <returns></returns>
-    [ResponseCache(Duration = 360, Location = ResponseCacheLocation.Any)]
+    //[ResponseCache(Duration = 360, Location = ResponseCacheLocation.Any)]
     [HttpGet(Name = "GetAllBrands")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Brand>))]
     public async Task<ActionResult> Get()

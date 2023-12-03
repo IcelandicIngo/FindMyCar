@@ -1,5 +1,6 @@
 using API.Middlewares;
 using FindMyCar.Core.Data;
+using FindMyCar.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using Serilog;
@@ -19,6 +20,10 @@ public static class HostingExtensions
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddCors();
+        builder.Services.AddTransient<IVehicleService, VehicleService>();
+        builder.Services.AddTransient<IBrandService, BrandService>();
+        builder.Services.AddTransient<IVehicleEquipmentService, VehicleEquipmentService>();        
         builder.Services.AddDbContext<VehicleContext>(options => {
             options.UseSqlServer(builder.Configuration.GetConnectionString("FindMyCar"));
         });
@@ -37,7 +42,12 @@ public static class HostingExtensions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
+        app.UseCors(builder =>
+       builder.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              );        
         app.ConfigureMetrics();
         app.UseMiddleware<ExceptionMiddleware>();
         app.MapControllers();

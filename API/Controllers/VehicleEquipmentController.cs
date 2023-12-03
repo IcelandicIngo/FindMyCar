@@ -20,7 +20,7 @@ public class VehicleEquipmentController : Controller
     /// Returns all vehicle equipments available.
     /// </summary>
     /// <returns></returns>
-    [ResponseCache(Duration = 360, Location = ResponseCacheLocation.Any)]
+    //[ResponseCache(Duration = 360, Location = ResponseCacheLocation.Any)]
     [HttpGet(Name = "GetAllVehicleEquipments")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<VehicleEquipment>))]
     public async Task<ActionResult> Get()

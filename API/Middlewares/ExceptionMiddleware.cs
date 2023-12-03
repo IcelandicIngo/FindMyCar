@@ -37,6 +37,7 @@ public class ExceptionMiddleware
             }
 
             var result = JsonSerializer.Serialize(new { message = ex?.Message });
+            Console.WriteLine(result);
             await response.WriteAsync(result);
         }
     }

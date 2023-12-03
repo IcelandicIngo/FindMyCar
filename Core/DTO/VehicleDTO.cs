@@ -8,7 +8,7 @@ public class VehicleDTO
     /// <summary>
     /// VIN or Vehicle Identification Number that uniquely represents a Vehicle.
     /// </summary>
-    public string VehicleId { get; set; } = string.Empty;
+    public string VehicleIdentificationNumber { get; set; } = string.Empty;
     /// <summary>
     /// License number currently used.
     /// </summary>
@@ -24,5 +24,5 @@ public class VehicleDTO
     /// <summary>
     /// Ids of vehicle equipment in use.
     /// </summary>
-    public List<int> EquipmentIds { get; set; }
+    public List<int> VehicleEquipmentIds { get; set; }
 }

@@ -17,11 +17,11 @@ public static class ModelExtensions
         return new VehicleDTO
         {
             Id = vehicle.Id,
-            VehicleId = vehicle.VehicleId,
+            VehicleIdentificationNumber = vehicle.VehicleId,
             LicenseNumber = vehicle.LicenseNumber,
             ModelName = vehicle.ModelName,
             BrandId = vehicle.Brand.Id,
-            EquipmentIds = vehicle.VehicleEquipments.Select(x => x.Id).ToList()
+            VehicleEquipmentIds = vehicle.VehicleEquipments.Select(x => x.Id).ToList()
         };
     }
 }

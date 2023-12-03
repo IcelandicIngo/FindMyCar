@@ -16,7 +16,7 @@ public partial class TestAPI
         var dto = await response.FromJSONAsync<VehicleDTO>();
         await response.AssertAsync(x => {
             
-            Assert.Equal("123", dto.VehicleId);
+            Assert.Equal("123", dto.VehicleIdentificationNumber);
             Assert.Equal("123", dto.LicenseNumber);
             Assert.Equal("v70", dto.ModelName);
         });
@@ -36,11 +36,11 @@ public partial class TestAPI
     {
         var dto = new VehicleDTO
         {
-            VehicleId = "123",
+            VehicleIdentificationNumber = "123",
             LicenseNumber = "123",
             ModelName = "v75",
             BrandId = 1,
-            EquipmentIds = new List<int>(){1}
+            VehicleEquipmentIds = new List<int>(){1}
         };
         var client = this.getClient();
         var response = await client.CreateAsync(dto);
@@ -52,11 +52,11 @@ public partial class TestAPI
     {
         var dto = new VehicleDTO
         {
-            VehicleId = "123",
+            VehicleIdentificationNumber = "123",
             LicenseNumber = "123",
             ModelName = "v75",
             BrandId = -1,
-            EquipmentIds = new List<int>(){1}
+            VehicleEquipmentIds = new List<int>(){1}
         };
         var client = this.getClient();
         var response = await client.CreateAsync(dto);
@@ -68,18 +68,17 @@ public partial class TestAPI
     {
         var dto = new VehicleDTO
         {
-            VehicleId = "123",
+            VehicleIdentificationNumber = "123",
             LicenseNumber = "123",
             ModelName = "v75",
             BrandId = 1,
-            EquipmentIds = new List<int>(){-1}
+            VehicleEquipmentIds = new List<int>(){-1}
         };
         var client = this.getClient();
         var response = await client.CreateAsync(dto);
         response.Assert404NotFound();
     }
-    /* Data gets corrupted somehow when arriving at controller, resulting in a false negative
-      TODO: FIX
+
     [Fact]
     public async Task UpdateShouldReturn200()
     {
@@ -87,10 +86,10 @@ public partial class TestAPI
         var dto = new VehicleDTO
         {
             LicenseNumber = "123",
-            VehicleId = "ax1qs",
+            VehicleIdentificationNumber = "ax1qs",
             ModelName = "v90",
             BrandId = 1,
-            EquipmentIds = new List<int>(){1}
+            VehicleEquipmentIds = new List<int>(){1}
         };
         var createResponse = await client.CreateAsync(dto);
         createResponse.Assert201Created();
@@ -102,7 +101,7 @@ public partial class TestAPI
             Assert.Equal(volvo.LicenseNumber, x.LicenseNumber);
         });
     }
-    */
+    
     [Fact]
     public async Task UpdateWithInvalidVehicleShouldReturn404()
     {
@@ -128,7 +127,7 @@ public partial class TestAPI
     public async Task UpdateWithInvalidEquipmentShouldReturn404()
     {
         var dto = TestSeed.Vehicles[0].ToDTO();
-        dto.EquipmentIds = new List<int>(){-1};
+        dto.VehicleEquipmentIds = new List<int>(){-1};
 
         var client = this.getClient();
         var response = await client.UpdateAsync(dto.Id, dto);
@@ -142,10 +141,10 @@ public partial class TestAPI
         var dto = new VehicleDTO
         {
             LicenseNumber = "123",
-            VehicleId = "ax1qs",
+            VehicleIdentificationNumber = "ax1qs",
             ModelName = "v90",
             BrandId = 1,
-            EquipmentIds = new List<int>(){1}
+            VehicleEquipmentIds = new List<int>(){1}
         };
         var createResponse = await client.CreateAsync(dto);
         createResponse.Assert201Created();

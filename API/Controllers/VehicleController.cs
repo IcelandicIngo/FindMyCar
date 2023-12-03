@@ -62,7 +62,7 @@ public class VehicleController : Controller
     [HttpPut("{id}", Name = "Update")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VehicleDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Update(int id, VehicleDTO vehicle)
+    public async Task<ActionResult> Update(int id, [FromBody] VehicleDTO vehicle)
     {
         return Ok(await this.service.UpdateAsync(id, vehicle));
     }

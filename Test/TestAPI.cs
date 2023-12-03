@@ -36,9 +36,6 @@ public partial class TestAPI
                 {
                     options.UseInMemoryDatabase("MyDatabase");
                 });
-                services.AddTransient<IVehicleService, VehicleService>();
-                services.AddTransient<IBrandService, BrandService>();
-                services.AddTransient<IVehicleEquipmentService, VehicleEquipmentService>();
             });
         });
 

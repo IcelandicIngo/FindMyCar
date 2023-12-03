@@ -36,10 +36,10 @@ public class VehicleService : IVehicleService
     public async Task<VehicleDTO> CreateAsync(VehicleDTO vehicle)
     {
         var brand = await this.context.GetBrandOrThrowAsync(vehicle.BrandId);
-        var equipments = await context.GetEquipmentOrThrowAsync(vehicle.EquipmentIds);
+        var equipments = await context.GetEquipmentOrThrowAsync(vehicle.VehicleEquipmentIds);
         var dbObj = new Vehicle
         {
-            VehicleId = vehicle.VehicleId,
+            VehicleId = vehicle.VehicleIdentificationNumber,
             LicenseNumber = vehicle.LicenseNumber,
             ModelName = vehicle.ModelName,
             Brand = brand,
@@ -54,9 +54,9 @@ public class VehicleService : IVehicleService
     {
         var dbVehicle = await this.context.GetVehicleOrThrowAsync(id);
         var brand = await this.context.GetBrandOrThrowAsync(vehicle.BrandId);
-        var equipment = await this.context.GetEquipmentOrThrowAsync(vehicle.EquipmentIds);
+        var equipment = await this.context.GetEquipmentOrThrowAsync(vehicle.VehicleEquipmentIds);
         dbVehicle.LicenseNumber = vehicle.LicenseNumber;
-        dbVehicle.VehicleId = vehicle.VehicleId;
+        dbVehicle.VehicleId = vehicle.VehicleIdentificationNumber;
         dbVehicle.ModelName = vehicle.ModelName;
         dbVehicle.Brand = brand;
         dbVehicle.VehicleEquipments = equipment;
