@@ -9,7 +9,7 @@ import { VehicleEquipment } from "@interfaces/VehicleEquipment";
 import { Vehicle } from "@interfaces/Vehicle";
 import { FormsModule } from "@angular/forms";
 
-import { FormControl } from "@angular/forms";
+import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
 import { BrandService } from "@services/brand-service.service";
 import { VehicleEquipmentService } from "@services/vehicle-equipment-service.service";
 @Component({
@@ -22,6 +22,7 @@ import { VehicleEquipmentService } from "@services/vehicle-equipment-service.ser
     MatSelectModule,
     MatCardModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: "./vehicle-details.component.html",
   styleUrl: "./vehicle-details.component.scss",
@@ -30,7 +31,12 @@ export class VehicleDetailsComponent implements OnInit {
   vehicleDetails: Vehicle = <Vehicle>{};
   brands: Brand[] = [];
   vehicleEquiments: VehicleEquipment[] = [];
-
+  detailsForm = new FormGroup({
+    vin: new FormControl('', [Validators.required]),
+    license: new FormControl(new Date()),
+    name: new FormControl('', [Validators.required]),
+    brand: new FormControl('', [Validators.required])
+  });
   @Input()
   set vehicle(vehicle: Vehicle) {
     if (vehicle) this.vehicleDetails = vehicle;
@@ -65,8 +71,10 @@ export class VehicleDetailsComponent implements OnInit {
   {
     this.brands = brands;
   }
-  submit()
-  {
-    this.onSubmit.emit(this.vehicleDetails);
+  submit(valid: boolean) {
+    if(valid)
+    {
+      this.onSubmit.emit(this.vehicleDetails);
+    }
   }
 }

@@ -9,7 +9,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: "reg",
+    path: "register",
     loadComponent: () =>
       import("./components/vehicle-create/vehicle-create.component").then(
         (m) => m.VehicleCreateComponent

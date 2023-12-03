@@ -4,32 +4,45 @@
       <mat-card-header>
         <mat-card-title>Vehicle Specification</mat-card-title>
       </mat-card-header>
-        <form class="example-form" (ngSubmit)="submit()">
+      <mat-card-content>¨
+        <form detailsForm="ngModel" class="example-form" (ngSubmit)="submit(detailsForm.valid)">
           <div class="row">
-            <mat-form-field>
-              <input matInput name="vinInput" [(ngModel)] = "vehicleDetails.vehicleIdentificationNumber" placeholder="Vehicle Identification Number">
-            </mat-form-field>    
+            <mat-form-field appearance="outline" class="form-field">
+              <input #vin="ngModel" matInput name="vinInput" required [(ngModel)] = "vehicleDetails.vehicleIdentificationNumber" placeholder="Vehicle Identification Number">
+            </mat-form-field>
+            <div *ngIf="vin.invalid && (vin.dirty || vin.touched)" class="alert">
+              You are required to enter a Vehicle Identification Number.
+            </div>
           </div>
           <div class="row">
-            <mat-form-field>
-              <input matInput name="modelNameInput" [(ngModel)] = "vehicleDetails.modelName" placeholder="Vehicle Model Name">
-            </mat-form-field>    
-          </div>      
+            <mat-form-field appearance="outline" class="form-field">
+              <input #modelName="ngModel" matInput name="modelNameInput" [(ngModel)] = "vehicleDetails.modelName" placeholder="Vehicle Model Name">
+            </mat-form-field>
+            <div *ngIf="modelName.invalid && (modelName.dirty || modelName.touched)" class="alert">
+              You are required to enter a Model Name0.
+            </div>
+          </div>
           <div class="row">
-            <mat-form-field>
-              <input matInput name="licenseNumberInput" [(ngModel)] = "vehicleDetails.licenseNumber" placeholder="License Plater Number">
-            </mat-form-field>    
-          </div>      
+            <mat-form-field appearance="outline" class="form-field">
+              <input #licenseNumber="ngModel" matInput name="licenseNumberInput" required [(ngModel)] = "vehicleDetails.licenseNumber" placeholder="License Plater Number">
+            </mat-form-field>
+            <div *ngIf="licenseNumber.invalid && (licenseNumber.dirty || licenseNumber.touched)" class="alert">
+              You are required to enter a License Number.
+            </div>
+          </div>
           <div class="row">
-            <mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
               <mat-label>Brand</mat-label>
-              <mat-select name="brandInput" [(ngModel)] = "vehicleDetails.brandId">
+              <mat-select name="brandInput" #brand="ngModel" required [(ngModel)] = "vehicleDetails.brandId">
                 <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
               </mat-select>
             </mat-form-field>
+            <div *ngIf="brand.invalid && (brand.dirty || brand.touched)" class="alert">
+              You are required to select a brand.
+            </div>            
           </div>
           <div class="row">
-            <mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
               <mat-label>Vehicle Equipment</mat-label>
               <mat-select name="vehicleEquipmentInput" [(ngModel)] = "vehicleDetails.vehicleEquipmentIds" multiple>
                 <mat-option *ngFor="let equipment of vehicleEquiments" [value]="equipment.id">{{equipment.description}}</mat-option>
@@ -37,9 +50,10 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <button type="submit" mat-raised-button>Submit</button>
+            <button type="submit" color="primary"  mat-raised-button>Submit</button>
           </div>
         </form>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
