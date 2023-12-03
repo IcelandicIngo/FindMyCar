@@ -1,5 +1,33 @@
-<mat-list>
-    <mat-list-item *ngFor="let vehicle of vehicles">
-        <h3 matLine> {{vehicle.modelName}} </h3>
-    </mat-list-item>
-</mat-list>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let vehicle of vehicles">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          License Number
+        </mat-panel-title>
+        <mat-panel-description>
+          {{vehicle.licenseNumber}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-md-6 pull-left">
+            <h5><span class="label label-primary">Vehicle Identification Number</span></h5>
+        </div>
+        <div class="col-md-6">{{vehicle.vehicleIdentificationNumber}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 pull-left">
+            <h5><span class="label label-primary">License Number</span></h5>
+        </div>
+        <div class="col-md-6">{{vehicle.vehicleIdentificationNumber}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 pull-left">
+            <h5><span class="label label-primary">Model Name</span></h5>
+        </div>
+        <div class="col-md-6">{{vehicle.modelName}}</div>
+      </div>
+      <div class="row">
+        <button id="SearchBtn" type="button" class="btn button-dark"><i class="bi bi-pencil" [routerLink]="['/', 'update', vehicle.id]"></i></button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
