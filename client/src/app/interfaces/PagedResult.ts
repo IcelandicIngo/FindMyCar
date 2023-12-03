@@ -1,4 +1,4 @@
-import { VehicleEquipment } from "./Vehicle";
+import { Vehicle } from "./Vehicle";
 export interface PagedResult {
   page: number;
   pageSize: number;

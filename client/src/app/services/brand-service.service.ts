@@ -3,14 +3,16 @@ import { retry, catchError } from "rxjs/operators";
 import { Observable, throwError } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Brand } from "@interfaces/Brand";
-import { BaseServiceService } from "./base-service";
+import { BaseService } from "./base-service.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class BrandServiceService extends BaseServiceService {
-  endpoint = "http://localhost:3000";
-  constructor(private httpClient: HttpClient) {}
+export class BrandService extends BaseService {
+  endpoint = "http://localhost:5011/brand";
+  constructor(private httpClient: HttpClient) {
+    super();
+  }
   httpHeader = {
     headers: new HttpHeaders({
       "Content-Type": "application/json",

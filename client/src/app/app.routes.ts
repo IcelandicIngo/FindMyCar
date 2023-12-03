@@ -9,14 +9,14 @@ export const routes: Routes = [
       ),
   },
   {
-    path: "create",
+    path: "reg",
     loadComponent: () =>
       import("./components/vehicle-create/vehicle-create.component").then(
         (m) => m.VehicleCreateComponent
       ),
   },
   {
-    path: "update",
+    path: "update/:id",
     loadComponent: () =>
       import("./components/vehicle-update/vehicle-update.component").then(
         (m) => m.VehicleUpdateComponent

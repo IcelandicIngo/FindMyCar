@@ -1,9 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Brand } from "@interfaces/Brand";
 import { VehicleEquipment } from "@interfaces/VehicleEquipment";
 import { Vehicle } from "@interfaces/Vehicle";
 import { VehicleDetailsComponent } from "@components/vehicle-details/vehicle-details.component";
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { VehicleService } from "@services/vehicle-service.service";
 
 @Component({
   selector: "app-vehicle-update",
@@ -12,34 +14,39 @@ import { VehicleDetailsComponent } from "@components/vehicle-details/vehicle-det
   templateUrl: "./vehicle-update.component.html",
   styleUrl: "./vehicle-update.component.scss",
 })
-export class VehicleUpdateComponent {
-  vehicle: Vehicle = {
-    id: 1,
-    licenseNumber: "123",
-    vehicleIdentificationNumber: "123",
-    modelName: "ingo",
-    vehicleEquipmentIds: [1],
-    brandId: 1,
-  };
-  brandsList: Brand[] = [
-    {
-      id: 1,
-      name: "rutjker",
-    },
-    {
-      id: 2,
-      name: "bjarni",
-    },
-  ];
+export class VehicleUpdateComponent implements OnInit {
+  vehicleDetails: Vehicle = <Vehicle>{};
 
-  vehicleEquipmentList: VehicleEquipment[] = [
-    {
-      id: 1,
-      description: "camera",
-    },
-    {
-      id: 2,
-      description: "camera2",
-    },
-  ];
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: VehicleService) {}  
+    ngOnInit(): void {
+      this.route.paramMap.subscribe((obs) => {
+        this.service.get(Number(obs.get('id'))).subscribe(
+          {
+            next: this.getVehicleHandler.bind(this),
+            error: console.error
+          }        
+        );
+      });
+    }
+
+    onSubmit(vehicle: Vehicle) {
+      console.log(vehicle);
+      this.service.update(vehicle.id, vehicle).subscribe(
+        {
+          next: this.vehicleUpdatedHandler.bind(this),
+          error: console.error
+        }      
+      )
+    }
+    vehicleUpdatedHandler(vehicle: Vehicle) {
+      this.router.navigate(['/'])
+    }
+
+    getVehicleHandler(vehicle: Vehicle) {
+      this.vehicleDetails = vehicle;
+    }
+
 }

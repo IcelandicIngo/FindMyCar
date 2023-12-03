@@ -1,6 +1,9 @@
 <div class="container-fluid">
     <mat-card>
-        <form class="example-form">
+      <mat-card-header>
+        <mat-card-title>Vehicle Specification</mat-card-title>
+      </mat-card-header>
+        <form class="example-form" (ngSubmit)="submit()">
           <div class="row">
             <mat-form-field>
               <input matInput name="vinInput" [(ngModel)] = "vehicleDetails.vehicleIdentificationNumber" placeholder="Vehicle Identification Number">
@@ -31,6 +34,9 @@
                 <mat-option *ngFor="let equipment of vehicleEquiments" [value]="equipment.id">{{equipment.description}}</mat-option>
               </mat-select>
             </mat-form-field>
+          </div>
+          <div class="row">
+            <button type="submit" mat-raised-button>Submit</button>
           </div>
         </form>
     </mat-card>

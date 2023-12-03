@@ -3,13 +3,16 @@ import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Vehicle } from '@interfaces/Vehicle'
-import { BaseServiceService } from './base-service';
+import { BaseService } from './base-service.service';
+import { PagedResult } from '@interfaces/PagedResult';
 @Injectable({
   providedIn: 'root'
 })
-export class VehicleServiceService extends BaseServiceService {
-  endpoint = 'http://localhost:3000';
-  constructor(private httpClient: HttpClient) {}
+export class VehicleService extends BaseService {
+  endpoint = 'http://localhost:5011/vehicle';
+  constructor(private httpClient: HttpClient) {
+    super();
+  }
   httpHeader = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -18,10 +21,11 @@ export class VehicleServiceService extends BaseServiceService {
 
   create(vehicle: Vehicle): Observable<Vehicle>
   {
+    console.log(vehicle);
     return this.httpClient
-      .post<User>(
+      .post<Vehicle>(
         this.endpoint,
-        JSON.stringify(data),
+        JSON.stringify(vehicle),
         this.httpHeader
       ).pipe(retry(1), catchError(this.processError));
   }
@@ -30,12 +34,12 @@ export class VehicleServiceService extends BaseServiceService {
   {
     return this.httpClient
       .get<Vehicle>(
-        this.endpoint + id,
+        this.endpoint + '/' + id,
         this.httpHeader
       ).pipe(retry(1), catchError(this.processError));    
   }
 
-  get(page: number = 1, pageSize:number = 100) : Observable<PagedResult>
+  getPage(page: number = 1, pageSize:number = 100) : Observable<PagedResult>
   {
     return this.httpClient
       .get<PagedResult>(
@@ -47,9 +51,9 @@ export class VehicleServiceService extends BaseServiceService {
   update(id: number, vehicle: Vehicle) : Observable<Vehicle>
   {
     return this.httpClient
-      .put<User>(
-        this.endpoint,
-        JSON.stringify(data),
+      .put<Vehicle>(
+        this.endpoint + '/' + id,
+        JSON.stringify(vehicle),
         this.httpHeader
       ).pipe(retry(1), catchError(this.processError));
   }
