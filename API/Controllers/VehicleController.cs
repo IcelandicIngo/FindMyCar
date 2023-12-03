@@ -22,11 +22,12 @@ public class VehicleController : Controller
     /// </summary>
     /// <param name="page">Page to return.</param>
     /// <param name="pageSize">Maximum number of results per page.</param>
+    /// <param name="licenseNumber">License number filter (prefix search).</param>
     [HttpGet(Name = "GetPage")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<VehicleDTO>))]
-    public async Task<ActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
+    public async Task<ActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 100, [FromQuery] string licenseNumber = "" )
     {
-        return Ok(await this.service.GetAsync(page, pageSize));
+        return Ok(await this.service.GetAsync(page, pageSize, licenseNumber));
     }
 
     /// <summary>

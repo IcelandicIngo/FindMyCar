@@ -39,11 +39,11 @@ export class VehicleService extends BaseService {
       ).pipe(retry(1), catchError(this.processError));    
   }
 
-  getPage(page: number = 1, pageSize:number = 100) : Observable<PagedResult>
+  getPage(page: number = 1, pageSize: number = 100, licenseNumber: string = "") : Observable<PagedResult>
   {
     return this.httpClient
       .get<PagedResult>(
-        this.endpoint + "?page=" + page + '&pageSize=' + pageSize,
+        this.endpoint + "?page=" + page + '&pageSize=' + pageSize + '&licenseNumber=' + licenseNumber,
         this.httpHeader
       ).pipe(retry(1), catchError(this.processError));    
   }  

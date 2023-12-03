@@ -18,9 +18,15 @@ public class VehicleService : IVehicleService
     }
 
     #region IVehicleService
-    public async Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100)
+    public async Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100, string licenseNumber = "")
     {
-        throw new NotImplementedException();
+        var result = await  this.context.Vehicles.Where(x =>  x.LicenseNumber.StartsWith(licenseNumber))
+                                                 .Include(x => x.Brand)
+                                                 .Include(x => x.VehicleEquipments)
+                                                 .Select(x => x.ToDTO())
+                                                 .ToListAsync();
+
+        return new PagedResult<VehicleDTO> { Page = page, PageSize = pageSize, Result = result };
     }
 
     public async Task<VehicleDTO> GetAsync(int id)

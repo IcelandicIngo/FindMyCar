@@ -1,12 +1,21 @@
 <div class="container-fluid">
     <div class="row">
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Search vehicles by Vehicle Identification Number (VIN)">
+        <form class="example-form" (ngSubmit)="onSearch()">
+          <div id="SearchField" class="pull-left">
+            <mat-form-field class="search-form-field">
+              <input name="licenseNumberInput" [(ngModel)]= "licenseNumber" matInput placeholder="Search vehicles by License number">
             </mat-form-field>
-          </form>     
+          </div>
+          <div id="SearchButton" class="pull-left">
+            <button type="submit" mat-icon-button>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              </svg>              
+            </button>
+          </div>
+        </form>     
     </div>
     <div class="row">
-        <app-vehicle-list></app-vehicle-list>
+        <app-vehicle-list [vehicles]="vehicles"></app-vehicle-list>
     </div>
 </div>

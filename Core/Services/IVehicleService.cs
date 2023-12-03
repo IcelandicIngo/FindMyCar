@@ -10,7 +10,8 @@ public interface IVehicleService
     /// </summary>
     /// <param name="page">Page to return.</param>
     /// <param name="pageSize">Maximum number of results in page.</param>
-    Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100);
+    /// <param name="licenseNumber">License number filter (prefix search).</param>
+    Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100, string licenseNumber = "");
     /// <summary>
     /// Returns a specific vehicle based on id.
     /// </summary>

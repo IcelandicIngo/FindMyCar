@@ -1,3 +1,25 @@
-.example-full-width {
-    width: 100%;
-  }
+
+  .pull-left
+{
+    float: left;
+}
+.search-form-field
+{
+  width: 100%;
+}
+#SearchField
+{
+  width: 90%;
+}
+
+#SearchButton
+{
+  width: 10%;
+}
+
+#SearchButton button
+{
+  min-width: 56px;
+  min-height: 56px;
+  border: none;
+}
