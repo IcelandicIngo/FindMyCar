@@ -30,6 +30,9 @@ public class VehicleService : IVehicleService
             result = await this.context.Vehicles.Where(x => x.LicenseNumber.StartsWith(licenseNumber))
                                                  .Include(x => x.Brand)
                                                  .Include(x => x.VehicleEquipments)
+                                                 .OrderBy(x => x.LicenseNumber)
+                                                 .Skip((page - 1) * pageSize)
+                                                 .Take(pageSize)
                                                  .Select(x => x.ToDTO()).ToListAsync();
         }
         else
@@ -38,6 +41,9 @@ public class VehicleService : IVehicleService
                                                  .Include(x => x.VehicleEquipments).CountAsync();
             result = await this.context.Vehicles.Include(x => x.Brand)
                                                  .Include(x => x.VehicleEquipments)
+                                                 .OrderBy(x => x.LicenseNumber)
+                                                 .Skip((page - 1) * pageSize)
+                                                 .Take(pageSize)
                                                  .Select(x => x.ToDTO()).ToListAsync();
         }
         return new PagedResult<VehicleDTO> { Page = page, PageSize = pageSize, Result = result, Total = total };

@@ -29,6 +29,31 @@ public class TestSeeder
                     Description = "Television"
                 }
             }
+        },
+        new Vehicle
+        {
+            Id = 2,
+            VehicleId = "123",
+            LicenseNumber = "333",
+            ModelName = "v70",
+            Brand = new Brand
+            {
+                Id = 2,
+                Name = "Saab"
+            },
+            VehicleEquipments = new List<VehicleEquipment>()
+            {
+                new VehicleEquipment
+                {
+                    Id = 3,
+                    Description = "Camera"
+                },
+                new VehicleEquipment
+                {
+                    Id = 4,
+                    Description = "Television"
+                }
+            }
         }
     };
 

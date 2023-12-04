@@ -62,9 +62,9 @@ public static class HttpExtensions
     /// </summary>
     /// <param name="client">HttpClient performing request.</param>
     /// <param name="id">Id of vehicle.</param>
-    public static async Task<HttpResponseMessage> GetAsync(this HttpClient client, int page = 1, int pageSize = 100)
+    public static async Task<HttpResponseMessage> GetAsync(this HttpClient client, int page = 1, int pageSize = 100, string licenseNumber = "")
     {
-        return await client.GetAsync($"/vehicle?page={page}&pageSize={pageSize}");
+        return await client.GetAsync($"/vehicle?page={page}&pageSize={pageSize}&licenseNumber={licenseNumber}");
     }
 
     /// <summary>
@@ -131,6 +131,23 @@ public static class HttpExtensions
     {
         string responseBody = await msg.Content.ReadAsStringAsync();
         var obj = JsonSerializer.Deserialize<VehicleDTO>(responseBody, new JsonSerializerOptions{
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+        assert(obj);
+        return msg;
+    }
+
+    /// <summary>
+    /// Custom assert HttpResponseMessage using provided assert action.
+    /// </summary>
+    /// <param name="msg">HttpResponseMessage that should be asserted..</param>
+    /// <param name="assert">Custom assert action.</param>
+    /// <returns></returns>
+    public static async Task<HttpResponseMessage> AssertAsync<T>(this HttpResponseMessage msg, Action<T> assert)
+    {
+        string responseBody = await msg.Content.ReadAsStringAsync();
+        var obj = JsonSerializer.Deserialize<T>(responseBody, new JsonSerializerOptions
+        {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
         assert(obj);

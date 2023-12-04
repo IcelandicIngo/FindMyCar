@@ -1,3 +1,4 @@
+using FindMyCar.Core;
 using FindMyCar.Core.DTO;
 using FindMyCar.Core.Extensions;
 using FindMyCar.Test.Extensions;
@@ -7,6 +8,46 @@ namespace FindMyCar.Test;
 
 public partial class TestAPI
 {
+    [Fact]
+    public async Task GetPageShouldReturn200()
+    {
+        var client = this.getClient();
+        int page = 1;
+        int pageSize = 1;
+        var response = await client.GetAsync(page, pageSize);
+        response.Assert200OK();
+        await response.AssertAsync<PagedResult<VehicleDTO>>(x =>
+        {
+            Assert.Equal(page, x.Page);
+            Assert.Equal(pageSize, x.PageSize);
+            Assert.Equal(2, x.Total);
+            Assert.Equal(1, x.Result.Count);
+            Assert.Equal("123", x.Result[0].LicenseNumber);
+        });
+
+        page++;
+        var secondPageResponse = await client.GetAsync(page, pageSize);
+        await secondPageResponse.AssertAsync<PagedResult<VehicleDTO>>(x =>
+        {
+            Assert.Equal(page, x.Page);
+            Assert.Equal(pageSize, x.PageSize);
+            Assert.Equal(2, x.Total);
+            Assert.Equal(1, x.Result.Count);
+            Assert.Equal("333", x.Result[0].LicenseNumber);
+        });
+
+        page = 1;
+        var filteredResponse = await client.GetAsync(page, pageSize, "123");
+        await filteredResponse.AssertAsync<PagedResult<VehicleDTO>>(x =>
+        {
+            Assert.Equal(page, x.Page);
+            Assert.Equal(pageSize, x.PageSize);
+            Assert.Equal(1, x.Total);
+            Assert.Equal(1, x.Result.Count);
+            Assert.Equal("123", x.Result[0].LicenseNumber);
+        });
+    }
+
     [Fact]
     public async Task GetSingleShouldReturn200()
     {
