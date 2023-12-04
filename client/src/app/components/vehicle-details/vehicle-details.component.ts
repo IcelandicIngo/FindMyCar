@@ -28,21 +28,27 @@ import { VehicleEquipmentService } from "@services/vehicle-equipment-service.ser
   styleUrl: "./vehicle-details.component.scss",
 })
 export class VehicleDetailsComponent implements OnInit {
+  creating: boolean = false;
   vehicleDetails: Vehicle = <Vehicle>{};
   brands: Brand[] = [];
   vehicleEquiments: VehicleEquipment[] = [];
   detailsForm = new FormGroup({
     vin: new FormControl('', [Validators.required]),
-    license: new FormControl(new Date()),
+    license: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required]),
     brand: new FormControl('', [Validators.required])
   });
   @Input()
   set vehicle(vehicle: Vehicle) {
-    if (vehicle) this.vehicleDetails = vehicle;
+    if (vehicle)
+    {
+      this.vehicleDetails = vehicle;
+      this.creating = true;
+    }
   }
 
   @Output() onSubmit = new EventEmitter<Vehicle>();
+  @Output() onDelete = new EventEmitter<Vehicle>();
   constructor(private brandService: BrandService, private vehicleEquipmentService: VehicleEquipmentService)
   {
 
@@ -62,6 +68,10 @@ export class VehicleDetailsComponent implements OnInit {
     );    
   }
 
+  delete(vehicle: Vehicle) {
+    this.onDelete.emit(this.vehicleDetails);
+  }
+
   getVehicleEquipmentHandler(equipments: VehicleEquipment[])
   {
     this.vehicleEquiments = equipments;
@@ -72,9 +82,8 @@ export class VehicleDetailsComponent implements OnInit {
     this.brands = brands;
   }
   submit(valid: boolean) {
-    if(valid)
-    {
-      this.onSubmit.emit(this.vehicleDetails);
-    }
+    console.log(valid);
+    this.onSubmit.emit(this.vehicleDetails);
+    // TODO FIX FKN FORM
   }
 }

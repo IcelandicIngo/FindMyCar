@@ -4,8 +4,8 @@
       <mat-card-header>
         <mat-card-title>Vehicle Specification</mat-card-title>
       </mat-card-header>
-      <mat-card-content>¨
-        <form detailsForm="ngModel" class="example-form" (ngSubmit)="submit(detailsForm.valid)">
+      <mat-card-content>
+        <form detailsForm="ngModel" class="example-form" (ngSubmit)="submit(!detailsForm.invalid)">
           <div class="row">
             <mat-form-field appearance="outline" class="form-field">
               <input #vin="ngModel" matInput name="vinInput" required [(ngModel)] = "vehicleDetails.vehicleIdentificationNumber" placeholder="Vehicle Identification Number">
@@ -50,10 +50,13 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <button type="submit" color="primary"  mat-raised-button>Submit</button>
+            <div class="btn-group">
+              <button [hidden]="!creating" (click)="delete(vehicle)" type="button" class="btn btn-light">Delete</button>
+              <button type="submit" class="btn btn-light">Save</button>
+            </div> 
           </div>
         </form>
-      </mat-card-content>
+      </mat-card-content> 
     </mat-card>
   </div>
 </div>

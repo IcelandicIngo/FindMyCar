@@ -5,6 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Vehicle } from '@interfaces/Vehicle'
 import { BaseService } from './base-service.service';
 import { PagedResult } from '@interfaces/PagedResult';
+import { of } from 'rxjs';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +39,7 @@ export class VehicleService extends BaseService {
       .get<Vehicle>(
         this.endpoint + '/' + id,
         this.httpHeader
-      ).pipe(retry(1), catchError(this.processError));    
+      ).pipe(retry(1), catchError(this.processError));
   }
 
   getPage(page: number = 1, pageSize: number = 100, licenseNumber: string = "") : Observable<PagedResult>
@@ -45,8 +48,8 @@ export class VehicleService extends BaseService {
       .get<PagedResult>(
         this.endpoint + "?page=" + page + '&pageSize=' + pageSize + '&licenseNumber=' + licenseNumber,
         this.httpHeader
-      ).pipe(retry(1), catchError(this.processError));    
-  }  
+      ).pipe(retry(1), catchError(this.processError));
+  }
 
   update(id: number, vehicle: Vehicle) : Observable<Vehicle>
   {
@@ -58,10 +61,10 @@ export class VehicleService extends BaseService {
       ).pipe(retry(1), catchError(this.processError));
   }
 
-  delete(id: number)
+  delete(id: number) : Observable<any>
   {
-    return this.httpClient
-      .delete<Vehicle>(this.endpoint + id, this.httpHeader)
-      .pipe(retry(1), catchError(this.processError));    
+     return this.httpClient
+      .delete<Vehicle>(this.endpoint + '/' + id, this.httpHeader)
+      .pipe(retry(1), catchError(this.processError));
   }
 }

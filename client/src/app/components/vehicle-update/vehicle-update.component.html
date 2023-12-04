@@ -3,6 +3,6 @@
         <img src="/assets/vehicle.png" alt="image">
     </div>
     <div class="col-md-7">
-        <app-vehicle-details (onSubmit)="onSubmit($event)" [vehicle] = "vehicleDetails"></app-vehicle-details>
+        <app-vehicle-details (onDelete)="onDelete($event)" (onSubmit)="onSubmit($event)" [vehicle] = "vehicleDetails"></app-vehicle-details>
     </div>
 </div>

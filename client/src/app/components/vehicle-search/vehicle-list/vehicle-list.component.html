@@ -2,11 +2,8 @@
     <mat-expansion-panel *ngFor="let vehicle of vehicles">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          License Number
-        </mat-panel-title>
-        <mat-panel-description>
           {{vehicle.licenseNumber}}
-        </mat-panel-description>
+        </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="row">
         <div class="col-md-6 pull-left">
@@ -18,7 +15,7 @@
         <div class="col-md-6 pull-left">
             <h5><span class="label label-primary">License Number</span></h5>
         </div>
-        <div class="col-md-6">{{vehicle.vehicleIdentificationNumber}}</div>
+        <div class="col-md-6">{{vehicle.licenseNumber}}</div>
       </div>
       <div class="row">
         <div class="col-md-6 pull-left">
@@ -26,8 +23,10 @@
         </div>
         <div class="col-md-6">{{vehicle.modelName}}</div>
       </div>
-      <div class="row">
-        <button id="SearchBtn" type="button" class="btn button-dark"><i class="bi bi-pencil" [routerLink]="['/', 'update', vehicle.id]"></i></button>
-      </div>
+      <mat-action-row>
+        <div class="btn-group">
+          <button [routerLink]="['/', 'update', vehicle.id]" type="button" class="btn btn-light">Specification</button>
+        </div>        
+      </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

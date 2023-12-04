@@ -33,15 +33,24 @@ export class VehicleUpdateComponent implements OnInit {
     }
 
     onSubmit(vehicle: Vehicle) {
-      console.log(vehicle);
       this.service.update(vehicle.id, vehicle).subscribe(
         {
-          next: this.vehicleUpdatedHandler.bind(this),
+          next: this.rerouteHandler.bind(this),
           error: console.error
         }      
-      )
+      );
     }
-    vehicleUpdatedHandler(vehicle: Vehicle) {
+
+    onDelete(vehicle: Vehicle) {
+      this.service.delete(vehicle.id).subscribe(
+        {
+          next: this.rerouteHandler.bind(this),
+          error: console.error
+        }      
+      );
+    }
+
+    rerouteHandler(res: any) {
       this.router.navigate(['/'])
     }
 

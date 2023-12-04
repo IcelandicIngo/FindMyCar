@@ -3,23 +3,11 @@
 {
     float: left;
 }
-.search-form-field
-{
-  width: 100%;
-}
 #SearchField
 {
   width: 90%;
 }
-
-#SearchButton
+form button
 {
-  width: 10%;
-}
-
-#SearchButton button
-{
-  min-width: 56px;
-  min-height: 56px;
-  border: none;
+  height: 56px;
 }
