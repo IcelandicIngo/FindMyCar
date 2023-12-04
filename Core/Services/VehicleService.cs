@@ -20,13 +20,27 @@ public class VehicleService : IVehicleService
     #region IVehicleService
     public async Task<PagedResult<VehicleDTO>> GetAsync(int page = 1, int pageSize = 100, string licenseNumber = "")
     {
-        var result = await  this.context.Vehicles.Where(x =>  x.LicenseNumber.StartsWith(licenseNumber))
+        var result = new List<VehicleDTO>();
+        int total = 0;
+        if(!string.IsNullOrEmpty(licenseNumber) )
+        {
+            total = await this.context.Vehicles.Where(x => x.LicenseNumber.StartsWith(licenseNumber))
+                                                 .Include(x => x.Brand)
+                                                 .Include(x => x.VehicleEquipments).CountAsync();
+            result = await this.context.Vehicles.Where(x => x.LicenseNumber.StartsWith(licenseNumber))
                                                  .Include(x => x.Brand)
                                                  .Include(x => x.VehicleEquipments)
-                                                 .Select(x => x.ToDTO())
-                                                 .ToListAsync();
-
-        return new PagedResult<VehicleDTO> { Page = page, PageSize = pageSize, Result = result };
+                                                 .Select(x => x.ToDTO()).ToListAsync();
+        }
+        else
+        {
+            total = await this.context.Vehicles.Include(x => x.Brand)
+                                                 .Include(x => x.VehicleEquipments).CountAsync();
+            result = await this.context.Vehicles.Include(x => x.Brand)
+                                                 .Include(x => x.VehicleEquipments)
+                                                 .Select(x => x.ToDTO()).ToListAsync();
+        }
+        return new PagedResult<VehicleDTO> { Page = page, PageSize = pageSize, Result = result, Total = total };
     }
 
     public async Task<VehicleDTO> GetAsync(int id)
@@ -74,6 +88,7 @@ public class VehicleService : IVehicleService
     {
         var dbVehicle = await this.context.GetVehicleOrThrowAsync(id);
         this.context.Vehicles.Remove(dbVehicle);
+        await this.context.SaveChangesAsync();
     }
     #endregion
 }

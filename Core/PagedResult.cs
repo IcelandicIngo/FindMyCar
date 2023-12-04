@@ -13,6 +13,10 @@ public class PagedResult<T> where T : class
     /// </summary>
     public int PageSize { get; set; } = 100;
     /// <summary>
+    /// Total number of records.
+    /// </summary>
+    public int Total { get; set; } = 0;
+    /// <summary>
     /// Results found at the current page.
     /// </summary>
     public List<T> Result { get; set; } = new List<T>();
