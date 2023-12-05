@@ -1,24 +1,22 @@
 <div class="container-fluid">
-    <div class="row">
+  <div class="row">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>
-            <form class="col-md-12" (ngSubmit)="onSearch()">
-              <mat-form-field class="pull-left">
-                <input id="SearchField"  name="licenseNumberInput" [(ngModel)]= "licenseNumber" matInput placeholder="License number">
-              </mat-form-field>
+            <form (ngSubmit)="onSearch()">
+              <div id="SearchField"><input name="licenseNumberInput" class="pull-left form-control" [(ngModel)]= "licenseNumber" placeholder="License number"></div>
+                
               <button type="button" type="submit" class="btn btn-light pull-left">Search</button>
-            </form>               
-          </mat-card-title>
+            </form>
+
         </mat-card-header>
         <mat-card-content>
           <div class="row">
             <app-vehicle-list [vehicles]="vehicles"></app-vehicle-list>
-          </div>          
+          </div>
         </mat-card-content>
         <mat-card-actions>
-          <mat-paginator [length]="totalVehicles" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPage($event)"></mat-paginator>        
-        </mat-card-actions>        
-      </mat-card>        
+          <mat-paginator [length]="totalVehicles" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPage($event)"></mat-paginator>
+        </mat-card-actions>
+      </mat-card>
     </div>
 </div>

@@ -7,10 +7,12 @@ public class ExceptionMiddleware
 {
     #region Private Members
     private readonly RequestDelegate next;
+    private readonly ILogger<ExceptionMiddleware> logger;
     #endregion
-    public ExceptionMiddleware(RequestDelegate next)
+    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
         this.next = next;
+        this.logger = logger;
     }
     public async Task Invoke(HttpContext context)
     {
@@ -33,11 +35,11 @@ public class ExceptionMiddleware
                     break;
                 default:
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    this.logger.LogCritical(ex.Message, ex.Data);
                     break;
             }
-
+            
             var result = JsonSerializer.Serialize(new { message = ex?.Message });
-            Console.WriteLine(result);
             await response.WriteAsync(result);
         }
     }

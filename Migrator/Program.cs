@@ -4,6 +4,7 @@
 using FindMyCar.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Migrator;
 
 internal class Program
 {
@@ -15,5 +16,6 @@ internal class Program
         optionsBuilder.UseSqlServer(configurationRoot.GetConnectionString("FindMyCar"));
         var context = new VehicleContext(optionsBuilder.Options);
         context.Database.Migrate();
+        Seeder.Seed(context);
     }
 }

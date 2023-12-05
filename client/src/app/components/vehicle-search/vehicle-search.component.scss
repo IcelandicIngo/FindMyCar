@@ -5,9 +5,15 @@
 }
 #SearchField
 {
-  width: 90%;
+  width: 85%;
 }
-form button
+
+form
 {
-  height: 56px;
+  width: 100%;
+}
+
+.mat-mdc-card-header-text
+{
+  width: 100%;
 }

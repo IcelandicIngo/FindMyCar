@@ -1,4 +1,8 @@
 # FindMyCar
+## Left Overs
+- Improve test line coverage
+- Improve styling
+- Investigate metrics & logging issue w.r.t graphana
 ## Dependencies
 - .NET 6 or above which can be found [here](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - Docker and Docker Compose which can be found [here](https://docs.docker.com/get-docker/)

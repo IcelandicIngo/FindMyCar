@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Vehicle } from "@interfaces/Vehicle";
 import { VehicleDetailsComponent } from "@components/vehicle-details/vehicle-details.component";
 import { VehicleService } from "@services/vehicle-service.service";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-vehicle-create",
@@ -12,7 +13,7 @@ import { VehicleService } from "@services/vehicle-service.service";
   styleUrl: "./vehicle-create.component.scss",
 })
 export class VehicleCreateComponent  {
-  constructor(private vehicleService: VehicleService){}
+  constructor(private vehicleService: VehicleService, private router: Router){}
   onSubmit(vehicle: Vehicle) {
     this.vehicleService.create(vehicle).subscribe(
       {
@@ -23,6 +24,6 @@ export class VehicleCreateComponent  {
   }
 
   vehicleCreatedHandler(vehicle: Vehicle) {
-    console.log(vehicle);
+    this.router.navigate(['/'])
   }
 }

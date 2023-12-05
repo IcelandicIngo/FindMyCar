@@ -4,9 +4,6 @@ using FindMyCar.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using Serilog;
-using Serilog.AspNetCore;
-using Serilog.Formatting.Compact;
-using Serilog.Sinks.Grafana.Loki;
 namespace API.Extensions;
 
 public static class HostingExtensions
@@ -42,7 +39,11 @@ public static class HostingExtensions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        //app.UseHttpsRedirection();
+        else
+        {
+            app.UseHttpsRedirection();
+        }
+        //
         app.UseCors(builder =>
        builder.AllowAnyOrigin()
               .AllowAnyHeader()
@@ -80,9 +81,8 @@ public static class HostingExtensions
     /// <param name="builder">WebApplicationBuilder to configure logging for.</param>
     public static WebApplicationBuilder ConfigureLogging(this WebApplicationBuilder builder)
     {
-        var logger = new LoggerConfiguration()
-        .ReadFrom.Configuration(builder.Configuration)
-        .CreateLogger();
+        var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration)
+                                                       .CreateLogger();
         builder.Logging.AddSerilog(logger);
         return builder;
     }
